@@ -1,4 +1,4 @@
-# MulyiGpus-Domain-Adaptation
+# MultiGpus-Domain-Adaptation
 Fork from https://github.com/jindongwang/transferlearning/tree/master/code/DeepDA  
 
 Need download dataset from orignal repositery. For not crashing your local machine, you can set backbone: dann on DeepCoral.yaml. It’s a small model.  
