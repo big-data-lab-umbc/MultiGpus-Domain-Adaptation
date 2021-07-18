@@ -243,7 +243,7 @@ def main():
     start = time.time()
     train(source_loader, target_train_loader, target_test_loader, model, optimizer, scheduler, args)
     end = time.time() 
-    print("Total time spend: {:.4f} s".format(start - end))
+    print("Total time spend: {:.4f} s".format(end - start))
     
 
 if __name__ == "__main__":
