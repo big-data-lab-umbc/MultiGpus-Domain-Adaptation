@@ -7,6 +7,7 @@ import utils
 from utils import str2bool
 import numpy as np
 import random
+import time
 import torch.multiprocessing as mp
 import torch.nn as nn
 import torch.nn.functional as F
@@ -151,6 +152,7 @@ def train(source_loader, target_train_loader, target_test_loader, model, optimiz
         
         criterion = torch.nn.CrossEntropyLoss()
         for _ in range(n_batch):
+            time1 = time.time()
             data_source, label_source = next(iter_source) # .next()
             data_target, _ = next(iter_target) # .next()
             data_source, label_source = data_source.to(
@@ -172,8 +174,11 @@ def train(source_loader, target_train_loader, target_test_loader, model, optimiz
             
         log.append([train_loss_clf.avg, train_loss_transfer.avg, train_loss_total.avg])
         
-        info = 'Epoch: [{:2d}/{}], cls_loss: {:.4f}, transfer_loss: {:.4f}, total_Loss: {:.4f}'.format(
-                        e, args.n_epoch, train_loss_clf.avg, train_loss_transfer.avg, train_loss_total.avg)
+        time2 = time.time()
+        epoch_time = time2 - time1
+
+        info = 'Epoch: [{:2d}/{}], cls_loss: {:.4f}, transfer_loss: {:.4f}, total_Loss: {:.4f}, duration: {:.4f}'.format(
+                        e, args.n_epoch, train_loss_clf.avg, train_loss_transfer.avg, train_loss_total.avg, epoch_time)
         # Test
         stop += 1
         test_acc, test_loss = test(model, target_test_loader, args)
@@ -235,7 +240,10 @@ def main():
     else:
         scheduler = None
 
+    start = time.time()
     train(source_loader, target_train_loader, target_test_loader, model, optimizer, scheduler, args)
+    end = time.time() 
+    print("Total time spend: {:.4f} s".format(start - end))
     
 
 if __name__ == "__main__":
