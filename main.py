@@ -141,6 +141,7 @@ def train(source_loader, target_train_loader, target_test_loader, model, optimiz
     stop = 0
     log = []
     for e in range(1, args.n_epoch+1):
+        time1 = time.time()
         model.train()
         train_loss_clf = utils.AverageMeter()
         train_loss_transfer = utils.AverageMeter()
@@ -152,7 +153,6 @@ def train(source_loader, target_train_loader, target_test_loader, model, optimiz
         
         criterion = torch.nn.CrossEntropyLoss()
         for _ in range(n_batch):
-            time1 = time.time()
             data_source, label_source = next(iter_source) # .next()
             data_target, _ = next(iter_target) # .next()
             data_source, label_source = data_source.to(
