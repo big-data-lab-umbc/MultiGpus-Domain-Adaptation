@@ -14,7 +14,7 @@ lr_decay: 0.75
 momentum: 0.9
 
 # Training related
-n_iter_per_epoch: 125
+n_iter_per_epoch: 250
 n_epoch: 10
 
 # Others
